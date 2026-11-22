@@ -1,26 +1,42 @@
+# GCD of the Sums of the First n Odd and Even Numbers
 
-This project provides a Python solution to compute the Greatest Common Divisor (GCD) of two values:
+Semester 1 (Aug 2025) practice problem in Python, plus a C exercise.
 
-sumOdd – the sum of the first n odd numbers.
+## Problem
 
-sumEven – the sum of the first n even numbers.
+Given a positive integer `n`:
 
-Problem Statement:
-You are given an integer n.
-Your task is to compute the GCD of sumOdd and sumEven, where:
+- `sumOdd = 1 + 3 + 5 + … + (2n − 1)`, the first n odd numbers
+- `sumEven = 2 + 4 + 6 + … + 2n`, the first n even numbers
 
-sumOdd = 1 + 3 + 5 + ... + (2n+1)
+Return `gcd(sumOdd, sumEven)`.
 
-sumEven = 2 + 4 + 6 + ... + (2n)
+## Solution (`test.py`)
 
-Return the GCD of sumOdd and sumEven.
+`Solution.gcdOfOddEvenSums(n)` sums both series with loops, then tries every divisor from 1 to
+`max(sumOdd, sumEven)` and keeps the largest one that divides both. It prints the two sums and
+the GCD.
 
-Iterating the numbers from 1 to 2n for odd numbers by using for loop
-Iterating the numbers from 1 to 2n+1 for even numbers by using for loop
+```bash
+python3 test.py
+# Enter a number: 4
+# This is even-  20
+# This is Odd 16
+# 4
+```
 
-Finding the max between them and then using for loop, iteration till gcd is found. 
+**The math shortcut:** `sumOdd = n²` and `sumEven = n(n + 1)`. Since `gcd(n, n + 1) = 1`,
+`gcd(n², n(n+1)) = n`, so the answer is always `n`. The loop version is O(n²) work; the closed
+form is O(1).
 
-Print Result
+## `1.c`: maximum subarray sum (brute force)
 
-New changes are to be made, and are made by dhruv!
+A separate C exercise: checks every subarray of `{3, -4, 5, -6, 7}` with three nested loops
+(O(n³)) and prints the largest sum.
 
+```bash
+cc 1.c -o maxsub && ./maxsub
+```
+
+**Known bug:** `max_sum` starts at `INT_MAX`, so `max_sum < sum` is never true and it prints
+`INT_MAX`. It should start at `INT_MIN`; then it prints `7`. Kadane's algorithm does it in O(n).
